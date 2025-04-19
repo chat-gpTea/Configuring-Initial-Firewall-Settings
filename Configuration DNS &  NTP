@@ -1,18 +1,90 @@
-<config urldb="paloaltonetworks" version="11.0.0">
-  <devices>
-    <entry name="localhost.localdomain">
-      <deviceconfig>
-        <system>
-          <hostname>firewall-a</hostname>
-          <domain>lab.local</domain>
-          <login-banner>Authorized Access Only</login-banner>
-          <latitude>37.00</latitude>
-          <longitude>122.00</longitude>
-          <timezone>Etc/UTC</timezone>
-          </system>
-      </deviceconfig>
-      </entry>
-  </devices>
-  <shared>
-    </shared>
-</config>
+# firewall_config_script.py
+# Author: Your Loyal Servant
+# Date: 2025-04-19
+# Purpose: Script to configure baseline firewall rules for a new web server deployment.
+
+# --- Configuration Variables ---
+WEB_SERVER_IP = "192.168.1.100"
+ADMIN_NETWORK = "10.0.0.0/24"
+SSH_PORT = 22
+HTTP_PORT = 80
+HTTPS_PORT = 443
+TRUSTED_MONITORING_IP = "203.0.113.5"
+
+# --- Firewall Interaction Placeholder ---
+# In a real script, this would interact with a firewall API (e.g., iptables, cloud provider SDK)
+def apply_firewall_rule(rule_details, description):
+    """Applies a firewall rule and logs the action."""
+    print(f"Applying Rule: {description}")
+    print(f"  Details: {rule_details}")
+    # --- Add actual API call here ---
+    # Example: firewall_api.add_rule(**rule_details)
+    print("-" * 20)
+
+# --- Rule Definitions ---
+
+# Rule 1: Allow SSH access ONLY from the admin network
+# What: Allow incoming TCP connections on port 22 (SSH).
+# Why: Essential for system administration and maintenance by the authorized team.
+# Ticket/Policy Reference: REQ-123, Security Policy Section 4.A
+ssh_rule = {
+    "action": "allow",
+    "protocol": "tcp",
+    "source_ip": ADMIN_NETWORK,
+    "destination_ip": WEB_SERVER_IP,
+    "destination_port": SSH_PORT,
+    "direction": "inbound"
+}
+apply_firewall_rule(ssh_rule, "Allow SSH from Admin Network")
+
+# Rule 2: Allow HTTP traffic from anywhere
+# What: Allow incoming TCP connections on port 80 (HTTP).
+# Why: Required for standard web access to the site. Will be redirected to HTTPS eventually.
+# Ticket/Policy Reference: REQ-124
+http_rule = {
+    "action": "allow",
+    "protocol": "tcp",
+    "source_ip": "0.0.0.0/0",  # Any source IP
+    "destination_ip": WEB_SERVER_IP,
+    "destination_port": HTTP_PORT,
+    "direction": "inbound"
+}
+apply_firewall_rule(http_rule, "Allow HTTP from Anywhere")
+
+# Rule 3: Allow HTTPS traffic from anywhere
+# What: Allow incoming TCP connections on port 443 (HTTPS).
+# Why: Required for secure web access to the site. Primary access method.
+# Ticket/Policy Reference: REQ-124
+https_rule = {
+    "action": "allow",
+    "protocol": "tcp",
+    "source_ip": "0.0.0.0/0",  # Any source IP
+    "destination_ip": WEB_SERVER_IP,
+    "destination_port": HTTPS_PORT,
+    "direction": "inbound"
+}
+apply_firewall_rule(https_rule, "Allow HTTPS from Anywhere")
+
+# Rule 4: Allow ICMP (Ping) from trusted monitoring service
+# What: Allow incoming ICMP echo-request packets.
+# Why: Needed for uptime monitoring by the external service (Nagios/Zabbix/etc.). Limits risk by sourcing only from trusted IP.
+# Ticket/Policy Reference: REQ-125, OPS-MON-001
+icmp_rule = {
+    "action": "allow",
+    "protocol": "icmp",
+    "icmp_type": "echo-request",
+    "source_ip": TRUSTED_MONITORING_IP,
+    "destination_ip": WEB_SERVER_IP,
+    "direction": "inbound"
+}
+apply_firewall_rule(icmp_rule, f"Allow ICMP Ping from Monitoring IP {TRUSTED_MONITORING_IP}")
+
+# Rule 5: Default Deny (Implicit or Explicit)
+# What: Block all other incoming traffic not explicitly allowed above.
+# Why: Principle of least privilege. Reduces attack surface. This might be the default behavior
+#      of the firewall or might require an explicit "deny all" rule at the end.
+# Note: Depending on the firewall system, a final explicit deny rule might be needed.
+#       Example: deny_rule = { "action": "deny", "protocol": "any", ... }
+#       apply_firewall_rule(deny_rule, "Default Deny All Inbound")
+
+print("Firewall configuration script finished.")
