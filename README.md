@@ -1,4 +1,5 @@
 **Configuring Initial Firewall Settings**
+---
 
 **Function of DNS:**
 
@@ -9,7 +10,6 @@ The Domain Name System (DNS) acts like the internet's phonebook. Its primary fun
 Preventing Access to Malicious Sites: DNS Security profiles can block queries to known malicious domains associated with malware, phishing, or command-and-control (C2) servers.
 
 Enabling Network Access: Firewalls often act as DNS relays or proxies for internal clients. Proper DNS configuration ensures that users behind the firewall can resolve external domain names to access websites and internet services.
-
 
 **Function of NAT:**
 
@@ -34,9 +34,12 @@ No NAT
 **What it is:** "No NAT" refers to explicitly configuring rules that prevent NAT from being applied to specific traffic flows that might otherwise be translated by a broader NAT rule. You essentially create an exception to your standard NAT policies.
 
 **Why it's important:** This is needed in specific scenarios where address translation is undesirable:
-VPN Traffic: When connecting two private networks via a site-to-site VPN, you typically want the private IPs to communicate directly without being NATted by the firewall at either end.
 
-Internal Traffic: For traffic between different internal network segments (zones) that traverses the firewall, you usually don't want NAT applied.
+VPN Traffic:
+When connecting two private networks via a site-to-site VPN, you typically want the private IPs to communicate directly without being NATted by the firewall at either end.
+
+Internal Traffic: 
+For traffic between different internal network segments (zones) that traverses the firewall, you usually don't want NAT applied.
 
 
 Server Access Control/Logging: Sometimes, you need specific servers (e.g., in a DMZ) to see the original internal client IP address for logging or access control purposes, rather than seeing the firewall's NAT address. A No NAT rule ensures the original source IP is preserved for that specific destination.
@@ -47,7 +50,11 @@ U-Turn NAT
 
 
 **Why it's important:** U-Turn NAT is necessary when:
-Consistent Access: You want internal users to access internal servers using the same public DNS name (FQDN) that external users use. This avoids needing different configurations (or split DNS) for internal vs. external access.
-Testing: It allows internal users or administrators to test the external accessibility and firewall rules for an internal server as if they were coming from the outside.
+
+Consistent Access: 
+You want internal users to access internal servers using the same public DNS name (FQDN) that external users use. This avoids needing different configurations (or split DNS) for internal vs. external access.
+
+Testing: 
+It allows internal users or administrators to test the external accessibility and firewall rules for an internal server as if they were coming from the outside.
 
 
