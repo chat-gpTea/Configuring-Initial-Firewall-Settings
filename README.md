@@ -23,38 +23,3 @@ Security through Obfuscation: By hiding internal private IP addresses from the e
 
 Network Flexibility: It simplifies internal network addressing and allows for easier network changes without needing to re-address numerous devices if the public IP changes.
 
-Source NAT (SNAT)
-
-**What it is:** Source NAT specifically modifies the source IP address of packets leaving the network. Typically, it translates a private source IP address to a public IP address (often the firewall's external interface address or an address from a NAT pool). This is the most common form of NAT.
-
-**Why it's important:** SNAT is essential for enabling outbound connectivity from a private network to a public network like the internet. Without SNAT, return traffic from the internet wouldn't know how to get back to the original private IP address. It's the mechanism that allows your internal users (e.g., Client-A in your lab setup) to browse the web using the firewall's public IP.
-
-No NAT
-
-**What it is:** "No NAT" refers to explicitly configuring rules that prevent NAT from being applied to specific traffic flows that might otherwise be translated by a broader NAT rule. You essentially create an exception to your standard NAT policies.
-
-**Why it's important:** This is needed in specific scenarios where address translation is undesirable:
-
-VPN Traffic:
-When connecting two private networks via a site-to-site VPN, you typically want the private IPs to communicate directly without being NATted by the firewall at either end.
-
-Internal Traffic: 
-For traffic between different internal network segments (zones) that traverses the firewall, you usually don't want NAT applied.
-
-
-Server Access Control/Logging: Sometimes, you need specific servers (e.g., in a DMZ) to see the original internal client IP address for logging or access control purposes, rather than seeing the firewall's NAT address. A No NAT rule ensures the original source IP is preserved for that specific destination.
-
-U-Turn NAT
-
-**What it is:** U-Turn NAT handles a specific scenario where a user on the internal network needs to access another internal resource (like a web server) using the resource's external public IP address or FQDN. The traffic path logically goes from the internal client to the firewall and then makes a "U-turn" back to the internal server, with the firewall performing the necessary address translations (potentially both source and destination NAT) to make it work.
-
-
-**Why it's important:** U-Turn NAT is necessary when:
-
-Consistent Access: 
-You want internal users to access internal servers using the same public DNS name (FQDN) that external users use. This avoids needing different configurations (or split DNS) for internal vs. external access.
-
-Testing: 
-It allows internal users or administrators to test the external accessibility and firewall rules for an internal server as if they were coming from the outside.
-
-
