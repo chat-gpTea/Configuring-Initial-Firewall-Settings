@@ -45,7 +45,7 @@ Geographical Context & Feature Accuracy: Defining the Latitude and Longitude (e.
 
 This task involves configuring the network routing and access permissions specifically for the firewall's management interface. These settings control how the firewall's administrative functions can be reached and how the management interface communicates beyond its directly connected network segment.
 
-**Why these modifications are important:** 
+-**Why these modifications are important:** 
 
 **Properly configuring the management interface is critical for:**
 
@@ -59,7 +59,7 @@ Securing Administrative Access: Restricting which IP addresses or networks can a
 
 This action involves applying the set of configuration changes that have been prepared (candidate configuration) to the firewall's active operational state (running configuration). It is the essential step that makes the defined settings take effect.
 
-**Why committing changes is important:** 
+-**Why committing changes is important:** 
 
 **This procedure is critical for:**
 
@@ -75,7 +75,7 @@ System Validation: Many firewall systems perform validation checks during the co
 
 This task involves using the firewall's administrative interface to query the Palo Alto Networks update servers. The goal is to identify if any newer versions of the PAN-OS (Palo Alto Networks Operating System) software are available for the specific model of the firewall currently in use.
 
-**Why checking for updates is important:**
+-**Why checking for updates is important:**
 Regularly performing this check is a crucial aspect of firewall management for several reasons:
 
 Security Vulnerability Awareness: It allows administrators to stay informed about the latest security patches and fixes released by the vendor. Knowing which updates are available is the first step towards mitigating known vulnerabilities present in older software versions.
