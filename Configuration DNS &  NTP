@@ -1,17 +1,18 @@
-Set DNS Servers for the Firewall:
-
-Configuring the firewall to use specific DNS servers to translate domain names into IP addresses.
-This configuration is crucial because the firewall itself needs to resolve domain names for various functions.
-To check for software updates (PAN-OS versions, antivirus definitions, threat signatures, etc.), the firewall needs to connect to Palo Alto Networks update servers (e.g., updates.paloaltonetworks.com). DNS allows it to find the IP address for these server names
-
-Set NTP Servers for the Firewall:
-
-Configuring the firewall to synchronize its internal clock with reliable time sources on the internet. In the lab, this involves navigating to Device > Setup > Services, selecting the NTP tab, and setting the Primary NTP Server to 0.pool.ntp.org and the Secondary NTP Server to 1.pool.ntp.org (these are public pools of time servers).
-
-Accurate time synchronization is vital for several reasons:
-
-Overall Network Consistency: Consistent time across all network devices simplifies management and analysis.
-Scheduled Tasks: Features like scheduled reports, configuration backups, or software updates rely on the firewall having the correct time.
-Time-Based Policies: Some security policies might have time-based conditions. Accurate time ensures these policies activate and deactivate correctly.
-Certificate Validation: SSL/TLS certificates used for secure communication (including management access via HTTPS, VPNs, and SSL decryption) have validity periods (start and end dates/times). An incorrect clock on the firewall can lead to valid certificates being rejected or expired ones being accepted.
-Accurate Logging: Firewall logs record events with timestamps. If the firewall's time is incorrect, correlating logs from the firewall with logs from other devices (servers, clients) becomes extremely difficult, hindering troubleshooting and security investigations.
+<config urldb="paloaltonetworks" version="11.0.0">
+  <devices>
+    <entry name="localhost.localdomain">
+      <deviceconfig>
+        <system>
+          <hostname>firewall-a</hostname>
+          <domain>lab.local</domain>
+          <login-banner>Authorized Access Only</login-banner>
+          <latitude>37.00</latitude>
+          <longitude>122.00</longitude>
+          <timezone>Etc/UTC</timezone>
+          </system>
+      </deviceconfig>
+      </entry>
+  </devices>
+  <shared>
+    </shared>
+</config>
