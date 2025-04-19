@@ -1,3 +1,5 @@
+**Configuring Initial Firewall Settings**
+
 **Function of DNS:**
 
 The Domain Name System (DNS) acts like the internet's phonebook. Its primary function is to translate human-readable domain names (like www.google.com) into numerical Internet Protocol (IP) addresses (like 172.217.160.142) that computers use to identify each other on a network. Without DNS, you would need to remember the specific IP address for every website or service you want to access.
