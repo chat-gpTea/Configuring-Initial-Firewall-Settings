@@ -1,0 +1,10 @@
+# general_settings.yaml - Configuration data for firewall general settings
+
+# Corresponds to Device > Setup > Management > General Settings in PAN-OS
+general_settings:
+  hostname: firewall-a                 # Sets the system name of the firewall
+  domain: lab.local                    # Sets the domain name suffix for the firewall
+  login_banner: Authorized Access Only # Text displayed to administrators before login
+  time_zone: Etc/UTC                   # Sets the time zone for the firewall clock and logs
+  latitude: 37.00                      # Geographic latitude for location-based services/info
+  longitude: 122.00                     # Geographic longitude for location-based services/info

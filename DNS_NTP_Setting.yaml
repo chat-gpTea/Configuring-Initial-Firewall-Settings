@@ -1,0 +1,10 @@
+# device_settings.yaml - Configuration data for firewall services
+
+services:                           # Top-level key for device service settings
+  update_server: updates.paloaltonetworks.com # Defines the server for PAN-OS software/content updates
+  dns:                              # Section for DNS (Domain Name System) settings
+    primary: 8.8.8.8                # Primary DNS server IP address used for lookups
+    secondary: 192.168.50.53        # Secondary DNS server IP address (backup)
+  ntp:                              # Section for NTP (Network Time Protocol) settings
+    primary: 0.pool.ntp.org         # Primary NTP server hostname for time synchronization
+    secondary: 1.pool.ntp.org       # Secondary NTP server hostname (backup)

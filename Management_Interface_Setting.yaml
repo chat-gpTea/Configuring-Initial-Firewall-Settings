@@ -1,0 +1,13 @@
+#Management_Interface_Setting.yaml -Configuration data for firewall management settings
+
+#Corresponds to Device > Setup > Interfaces > Management
+Management_Interface_Setting:
+  IP_Address: 192.168.1.254              # IP address used to access the firewall's management plane (GUI/CLI/API)
+  Netmask: 255.255.255.255               # Defines the subnet mask for the management IP address
+  Default Gateway: 192.168.1.1           # The router IP the MGT interface uses to reach non-local networks
+
+# Represents the list of permitted IP addresses/networks
+Permitted_Ips:
+  Ip_Address: 192.168.1.20/24                       # The IP address used to access the firewall's management plane
+  Description: MGT access from this host only       #MGT has its own firewall access apart from local users
+
